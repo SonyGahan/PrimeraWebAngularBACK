@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,9 +50,9 @@ public class DpersonalController {
 		return new ResponseEntity<Dpersonal>(dpersonal, HttpStatus.OK);
     }
 
-    
+  @PreAuthorize("hasRole('ADMIN')")  
   @PostMapping ("/dpersonal/agregar")
-    public ResponseEntity<?> createExperiencia(@RequestBody Dpersonal dpersonal){
+    public ResponseEntity<?> createDpersonal(@RequestBody Dpersonal dpersonal){
         Dpersonal dpersonalnew = null;
         Map<String, Object> response = new HashMap<String, Object>();
 
@@ -67,7 +68,7 @@ public class DpersonalController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
      
-    
+  @PreAuthorize("hasRole('ADMIN')")  
   @DeleteMapping ("/dpersonal/eliminar/{id}")
     public ResponseEntity<?> deleteDpersonal(@PathVariable Long id){
         Map<String, Object> response = new HashMap<String, Object>();
@@ -84,7 +85,7 @@ public class DpersonalController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK); 
     }     
    
-    
+  @PreAuthorize("hasRole('ADMIN')")  
   @PutMapping ("/dpersonal/editar/{id}")
     public ResponseEntity<?> editDpersonal (@PathVariable Long id,
                                       @RequestBody Dpersonal dpersonalEdit
